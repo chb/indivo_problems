@@ -1,0 +1,7 @@
+<Problem xmlns="http://indivo.org/vocab/xml/documents#">
+  <dateOnset>{{date_onset|escape}}</dateOnset>
+  <dateResolution>{{date_resolution|escape}}</dateResolution>
+  <name type="{{coding_system}}" value="{{code}}" abbrev="{{code_abbrev}}">{{code_fullname|escape}}</name>
+  <comments>{{comments|escape}}</comments>
+  <diagnosedBy>{{diagnosed_by|escape}}</diagnosedBy>
+</Problem>

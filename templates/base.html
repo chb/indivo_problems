@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link type="text/css" href="{{ STATIC_HOME }}/css/sunny/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+  <link type="text/css" href="{{ STATIC_HOME }}/css/jquery.autocomplete.css" rel="stylesheet" />
+  <link type="text/css" href="{{ INDIVO_UI_SERVER_BASE }}/lib/widgets.css?{{CB}}" rel="stylesheet" />
+  <script src="{{ STATIC_HOME }}/js/jquery-1.3.2.min.js"></script>
+  <script src="{{ STATIC_HOME }}/js/jquery-ui-1.7.2.custom.min.js"></script>
+  <script src="{{ STATIC_HOME }}/js/jquery.autocomplete.js"></script>
+  <script src="{{ INDIVO_UI_SERVER_BASE }}/lib/widgets.js?{{CB}}"></script>
+  </head>
+  <body>
+    <script>
+      Indivo.setup('{{INDIVO_UI_SERVER_BASE}}');
+    </script>
+    {% block content %}{% endblock %}
+  </body>
+</html>

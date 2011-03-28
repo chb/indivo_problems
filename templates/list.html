@@ -1,0 +1,37 @@
+{% extends 'problems/templates/base.html' %}
+{% block title %}problem list{% endblock %}
+{% block content %}
+
+  <h2>Problems List</h2>
+
+  {% ifequal num_problems 0 %}
+  {% else %}
+    <table class="light">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th>Onset</th>
+          <th>Resolution</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="3" style="text-align: right">{{num_problems}} problem{% ifequal num_problems 1 %}{% else %}s{% endifequal %}</td>
+        </tr>
+      </tfoot>
+      <tbody>
+        {% for p in problems %}
+          <tr class="{% cycle 'odd' 'even' %}">
+            <td><a href="{{p.document_id}}">{{p.name}}</a></td>
+            <td>{{p.date_onset}}</td>
+            <td>{{p.date_resolution}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endifequal %}
+
+  <p><a href="new">[add a problem]</a></p>
+  <p><a href="test">[test message send]</a></p>
+
+{% endblock %}

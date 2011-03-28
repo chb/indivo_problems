@@ -1,0 +1,33 @@
+{% extends 'problems/templates/base.html' %}
+{% block title %}problem list{% endblock %}
+{% block content %}
+
+{% if record_id %}
+<script>
+  Indivo.Auth.setToken("{{surl_credentials.token}}","{{surl_credentials.secret}}");
+</script>
+{% endif %}
+
+<h2>{{problem.name}} &nbsp;&nbsp;<span style="font-size:0.7em;">[<a href="./">BACK</a>]</span></h2>
+
+{% if record_id %}
+  <script>
+    Indivo.Widget.DocumentAccess.add('{{record_id}}', '{{problem_id}}');
+  </script>
+{% endif %}
+
+<table class="light" style="width: 66%; margin: 2em 0;">
+  <tbody>
+    <col style="width: 25%"></col>
+    <col style="width: 75%"></col>
+    <tr><th scope="row">Date of onset</th><td>{{problem.date_onset}}</td></tr>
+    <tr><th scope="row">Date resolved</th><td>{{problem.date_resolution}}</td></tr>
+    <tr><th scope="row">Comments</th><td>{{problem.comments}}</td></tr>
+    <tr><th scope="row">Diagnosed by</th><td>{{problem.diagnosed_by}}</td></tr>
+  </tbody>
+</table>
+
+<h3>Additional Information</h3>
+<div class="details">Created at {{meta.created_at}}</div>
+
+{% endblock %}
