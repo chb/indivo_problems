@@ -90,7 +90,7 @@ def test_message_send(request):
     client.message_record(record_id=record_id, message_id=message_id, data={'subject':'testing!', 'body':'testing markdown with a [link to something fun]({APP_BASE}/message?id={MESSAGE_ID})', 'num_attachments':'1', 'body_type': 'markdown'})
 
     # an XML doc to send
-    problem_xml = render_raw('problem', {'date_onset': '2010-04-26', 'date_resolution': '2010-08-03', 'coding_system': 'snomed', 'code': '37796009', 'code_fullname':'Migraine (disorder)', 'comments': 'I\'ve had a headache waiting for alpha3.', 'diagnosed_by': 'Dr. Ken'}, type='xml')
+    problem_xml = render_raw('problem', {'date_onset': '2010-04-26T19:37:05.000Z', 'date_resolution': '2010-04-26T19:37:05.000Z', 'coding_system': 'snomed', 'code': '37796009', 'code_fullname':'Migraine (disorder)', 'comments': 'I\'ve had a headache waiting for alpha3.', 'diagnosed_by': 'Dr. Ken'}, type='xml')
 
     client.message_record_attachment(record_id=record_id, message_id=message_id, attachment_num="1", data=problem_xml)
 
