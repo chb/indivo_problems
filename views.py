@@ -101,7 +101,9 @@ def test_message_send(request):
 def problem_list(request):
     client = get_indivo_client(request)
     
-    if request.session.has_key('record_id'):
+    in_carenet = request.session.has_key('carenet_id')
+
+    if not in_carenet:
         record_id = request.session['record_id']
         
         # get record information
@@ -130,7 +132,8 @@ def problem_list(request):
     
     num_problems = int(problems_et.find('Summary').attrib['total_document_count'])
     
-    return render_template('list', {'record_label': record_label, 'num_problems' : num_problems, 'problems': problems})
+    return render_template('list', {'record_label': record_label, 'num_problems' : num_problems, 'problems': problems,
+                                    'in_carenet':in_carenet, })
 
 def new_problem(request):
     if request.method == "GET":

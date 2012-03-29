@@ -2,7 +2,7 @@
 {% block title %}problem list{% endblock %}
 {% block content %}
 
-  <h2>Problems List</h2>
+  <h2>Problems List {% if in_carenet %}(Shared){% endif %}</h2>
 
   {% ifequal num_problems 0 %}
   {% else %}
@@ -31,7 +31,9 @@
     </table>
   {% endifequal %}
 
+  {% if not in_carenet %}
   <p><a href="new">[add a problem]</a></p>
   <p><a href="test">[test message send]</a></p>
+  {% endif %}
 
 {% endblock %}
