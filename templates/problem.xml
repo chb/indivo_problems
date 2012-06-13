@@ -1,7 +1,10 @@
-<Problem xmlns="http://indivo.org/vocab/xml/documents#">
-  <dateOnset>{{date_onset|escape}}</dateOnset>
-  <dateResolution>{{date_resolution|escape}}</dateResolution>
-  <name type="{{coding_system}}" value="{{code}}" abbrev="{{code_abbrev}}">{{code_fullname|escape}}</name>
-  <comments>{{comments|escape}}</comments>
-  <diagnosedBy>{{diagnosed_by|escape}}</diagnosedBy>
-</Problem>
+<Models xmlns="http://indivo.org/vocab/xml/documents#">
+  <Model name="Problem">
+    <Field name="startDate">{{date_onset|escape}}</Field>
+    <Field name="endDate">{{date_resolution|escape}}</Field>
+    <Field name="name_title">{{code_fullname|escape}}</Field>
+    <Field name="name_system">{{coding_system}}</Field>
+    <Field name="name_identifier">{{code}}</Field>
+    <Field name="notes">{{comments|escape}}</Field>
+  </Model>
+</Models>

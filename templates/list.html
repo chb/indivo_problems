@@ -22,9 +22,9 @@
       <tbody>
         {% for p in problems %}
           <tr class="{% cycle 'odd' 'even' %}">
-            <td><a href="{{p.document_id}}">{{p.name}}</a></td>
-            <td>{{p.date_onset}}</td>
-            <td>{{p.date_resolution}}</td>
+            <td><a href="{{p.id}}">{{p.name_title}}</a></td>
+            <td>{{p.startDate}}</td>
+            <td>{{p.endDate}}</td>
           </tr>
         {% endfor %}
       </tbody>

@@ -8,7 +8,7 @@
 </script>
 {% endif %}
 
-<h2>{{problem.name}} &nbsp;&nbsp;<span style="font-size:0.7em;">[<a href="./">BACK</a>]</span></h2>
+<h2>{{problem.name_title}} &nbsp;&nbsp;<span style="font-size:0.7em;">[<a href="./">BACK</a>]</span></h2>
 
 {% if record_id %}
   <script>
@@ -20,10 +20,9 @@
   <tbody>
     <col style="width: 25%"></col>
     <col style="width: 75%"></col>
-    <tr><th scope="row">Date of onset</th><td>{{problem.date_onset}}</td></tr>
-    <tr><th scope="row">Date resolved</th><td>{{problem.date_resolution}}</td></tr>
-    <tr><th scope="row">Comments</th><td>{{problem.comments}}</td></tr>
-    <tr><th scope="row">Diagnosed by</th><td>{{problem.diagnosed_by}}</td></tr>
+    <tr><th scope="row">Date of onset</th><td>{{problem.startDate}}</td></tr>
+    <tr><th scope="row">Date resolved</th><td>{{problem.endDate}}</td></tr>
+    <tr><th scope="row">Comments</th><td>{{problem.notes}}</td></tr>
   </tbody>
 </table>
 

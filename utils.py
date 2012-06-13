@@ -5,10 +5,10 @@ Ben Adida
 ben.adida@childrens.harvard.edu
 """
 
-from xml.etree import ElementTree
+from lxml import etree as ET
 import cgi, datetime
 
-from indivo_client_py.lib.client import IndivoClient
+from indivo_client_py import IndivoClient
 
 # settings including where to find Indivo
 import settings
@@ -21,9 +21,11 @@ from django.template import Context, loader
 
 
 def get_indivo_client(request, with_session_token=True):
-    client = IndivoClient(settings.INDIVO_SERVER_OAUTH['consumer_key'], settings.INDIVO_SERVER_OAUTH['consumer_secret'], settings.INDIVO_SERVER_LOCATION)
-    if with_session_token:
-        client.update_token(request.session['access_token'])
+    server_params = {"api_base": settings.INDIVO_SERVER_LOCATION,
+                     "authorization_base": settings.INDIVO_UI_SERVER_BASE}
+    consumer_params = settings.INDIVO_SERVER_OAUTH
+    token = request.session['access_token'] if with_session_token else None
+    client = IndivoClient(server_params, consumer_params, resource_token=token)
     return client
 
 def parse_token_from_response(resp):
@@ -61,23 +63,22 @@ def render_template(template_name, vars={}, type="html"):
   return HttpResponse(content, mimetype=mimetype)
 
 def parse_xml(xml_string):
-  return ElementTree.fromstring(xml_string)
+  return ET.XML(xml_string)
 
 NS = "{http://indivo.org/vocab/xml/documents#}"
 
 def parse_meta(etree):
-    if hasattr(etree, 'attrib'):
-        return {'document_id': etree.attrib['id'], 'created_at' : etree.findtext('createdAt')}
-    else:
-        # this is an error condition
-        # raise Exception("no meta information about this report")
-        # FIXME: temporary hack
-        return {'document_id': 'foobar', 'created_at' : '2010-03-01'}
+    return {'document_id': etree.attrib['id'], 'created_at' : etree.findtext('createdAt')}
 
-def parse_problem(etree):
-    new_problem = {'date_onset' : etree.findtext('%sdateOnset' % NS),
-                   'date_resolution' : etree.findtext('%sdateResolution' % NS),
-                   'name': etree.findtext('%sname' % NS),
-                   'comments': etree.findtext('%scomments' % NS),
-                   'diagnosed_by': etree.findtext('%sdiagnosedBy' % NS)}
+def parse_sdmx_problem(etree, ns=False):
+    def _t(tag):
+        return NS+tag if ns else tag
+    new_problem = {}
+    for field in etree.find(_t('Model')).findall(_t('Field')):
+        new_problem[field.get('name', None)] = field.text
     return new_problem
+
+def process_problem(problem):
+    problem['id'] = problem['__documentid__']
+    del problem['__documentid__']
+    return problem
