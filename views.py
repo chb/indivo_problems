@@ -176,7 +176,12 @@ def code_lookup(request):
     query = request.GET['query']
     
     # reformat this for the jQuery autocompleter
-    codes = simplejson.loads(client.lookup_code(coding_system='snomed', parameters= {'q' : query}).response['response_data'])
+    resp, content = client.coding_system_query(system_short_name='snomed', body={'q':query})
+    if resp['status'] != '200':
+        # TODO: handle errors
+        # But this Indivo instance might not support codingsystem lookup, so let's pass
+        pass
+    codes = simplejson.loads(content)
     formatted_codes = {'query': query, 'suggestions': [c['consumer_value'] for c in codes], 'data': codes}
     
     return HttpResponse(simplejson.dumps(formatted_codes), mimetype="text/plain")
