@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import *
 from views import *
-import settings
-from django.conf import settings as rootsettings
+from django.conf import settings
 
 urlpatterns = patterns('',
    # authentication
@@ -20,5 +19,5 @@ urlpatterns = patterns('',
 
     # static
     ## WARNING NOT FOR PRODUCTION
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': rootsettings.SERVER_ROOT_DIR + settings.STATIC_HOME}),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_HOME}),
 )

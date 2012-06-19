@@ -1,0 +1,3 @@
+[submodule "indivo_client_py"]
+	path = indivo_client_py
+	url = git://github.com/chb/indivo_client_py
