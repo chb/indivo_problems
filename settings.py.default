@@ -12,7 +12,6 @@ APP_HOME = '/path/to/indivo_problems'
 STATIC_HOME = APP_HOME+'/static'
 
 # Django Settings: can safely ignore
-SUBMODULE_NAME = 'problems'
 SEND_MAIL = False # Whether to notify admins when something fails
 
 DEBUG = True
