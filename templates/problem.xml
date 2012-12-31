@@ -2,9 +2,10 @@
   <Model name="Problem">
     <Field name="startDate">{{date_onset|escape}}</Field>
     <Field name="endDate">{{date_resolution|escape}}</Field>
+    <Field name="name_code_title">{{code_fullname|escape}}</Field>
     <Field name="name_title">{{code_fullname|escape}}</Field>
-    <Field name="name_system">{{coding_system}}</Field>
-    <Field name="name_identifier">{{code}}</Field>
+    <Field name="name_code_system">{{coding_system}}</Field>
+    <Field name="name_code_identifier">{{code}}</Field>
     <Field name="notes">{{comments|escape}}</Field>
   </Model>
 </Models>

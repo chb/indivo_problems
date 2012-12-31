@@ -22,34 +22,39 @@
       <col style="width: 20%"></col>
       <col style="width: 80%"></col>
       <tr>
-        <td>Problem</td>
+        <td>Problem Title</td>
         <td>
-          <input type="hidden" name="code" value="" id="problem_code" />
-          <input type="text" name="code_fullname" id="problem_fullname" style="width: 100%" />
+          <input type="text" name="code_fullname" id="problem_fullname" />
+        </td>
+      </tr>
+
+      <tr>
+        <td>Problem Code</td>
+        <td>
+          <input type="text" name="code" value="" id="problem_code" />
         </td>
       </tr>
 
       <tr>
         <td>Onset</td>
-        <td><input type="text" name="date_onset" class="date" style="width: 100%" /></td>
+        <td><input type="text" name="date_onset" class="date" /></td>
       </tr>
 
       <tr>
         <td>Resolution</td>
-        <td><input type="text" name="date_resolution" class="date" style="width: 100%" /></td>
+        <td><input type="text" name="date_resolution" class="date" /></td>
       </tr>
 
       <tr>
-        <td>Details</td>
-        <td><textarea name="comments" cols="50" rows="3" wrap="soft" style="width: 100%"></textarea></td>
+        <td>Notes</td>
+        <td><textarea name="comments" cols="50" rows="3" wrap="soft"></textarea></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><input type="submit" value="Add New Problem" /></td>
       </tr>
     </table>
-
-    <br />
-    
-    <div style="text-align: center">
-      <input type="submit" value="Add New Problem" style="width: 33%"/>
-    </div>
   </form>
 
 {% endblock %}

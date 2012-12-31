@@ -180,8 +180,9 @@ def code_lookup(request):
     if resp['status'] != '200':
         # TODO: handle errors
         # But this Indivo instance might not support codingsystem lookup, so let's pass
-        pass
-    codes = simplejson.loads(content)
+        codes = []
+    else:
+        codes = simplejson.loads(content)
     formatted_codes = {'query': query, 'suggestions': [c['consumer_value'] for c in codes], 'data': codes}
     
     return HttpResponse(simplejson.dumps(formatted_codes), mimetype="text/plain")
