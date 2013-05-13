@@ -9,6 +9,7 @@ from utils import *
 import uuid
 
 from django.utils import simplejson
+from django.template import Context
 
 def start_auth(request):
     """
@@ -87,7 +88,12 @@ def test_message_send(request):
     client.record_send_message(record_id=record_id, message_id=message_id, body={'subject':'testing', 'body':'testing! [a link](http://indivohealth.org/)', 'num_attachments':'1', 'body_type': 'markdown'})
 
     # an XML doc to send
-    problem_xml = render_raw('problem', {'date_onset': '2010-04-26T19:37:05.000Z', 'date_resolution': '2010-04-26T19:37:05.000Z', 'coding_system': 'http://purl.bioontology.org/ontology/SNOMEDCT/', 'code': '37796009', 'code_fullname':'Migraine (disorder)', 'comments': 'I\'ve had a headache waiting for alpha3.', 'diagnosed_by': 'Dr. Ken'}, type='xml')
+    params = {'date_onset':'2010-04-26T19:37:05.000Z', 'date_resolution':'2010-04-26T19:37:05.000Z',
+              'coding_system':'http://purl.bioontology.org/ontology/SNOMEDCT/', 'code':'37796009',
+              'code_fullname':'Migraine (disorder)', 'comments':'I\'ve had a headache waiting for alpha3.',
+              'diagnosed_by':'Dr. Ken'}
+    problem_template = loader.get_template('%s/%s' % (settings.TEMPLATE_PREFIX, 'problem.xml'))
+    problem_xml = problem_template.render(Context(params))
 
     client.record_message_attach(record_id=record_id, message_id=message_id, attachment_num="1", body=problem_xml)
 
@@ -133,12 +139,12 @@ def problem_list(request):
     record_label = record.attrib['label']
     num_problems = len(probs)
     
-    return render_template('list', {'record_label': record_label, 'num_problems' : num_problems, 
+    return render_template(request, 'list', {'record_label': record_label, 'num_problems' : num_problems,
                                     'problems': probs, 'in_carenet':in_carenet, })
 
 def new_problem(request):
     if request.method == "GET":
-        return render_template('newproblem')
+        return render_template(request, 'newproblem')
     else:
 
         # Fix dates formatted by JQuery into xs:dateTime                                        
@@ -153,7 +159,8 @@ def new_problem(request):
                   'code_fullname': request.POST['code_fullname'], 
                   'code': request.POST['code'], 
                   'comments' : request.POST['comments']}
-        problem_xml = render_raw('problem', params, type='xml')
+        problem_template = loader.get_template('%s/%s' % (settings.TEMPLATE_PREFIX, 'problem.xml'))
+        problem_xml = problem_template.render(Context(params))
         
         # add the problem
         client = get_indivo_client(request)
@@ -248,5 +255,5 @@ def one_problem(request, problem_id):
     record_label = record.attrib['label']
     surl_credentials = client.get_surl_credentials()
     
-    return render_template('one', {'problem':problem, 'record_label': record_label, 'meta': meta, 'record_id': record_id, 'problem_id': problem_id, 'surl_credentials': surl_credentials})
+    return render_template(request, 'one', {'problem':problem, 'record_label': record_label, 'meta': meta, 'record_id': record_id, 'problem_id': problem_id, 'surl_credentials': surl_credentials})
 

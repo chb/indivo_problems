@@ -6,7 +6,8 @@ ben.adida@childrens.harvard.edu
 """
 
 from lxml import etree as ET
-import cgi, datetime
+import cgi
+import datetime
 
 from indivo_client_py import IndivoClient
 
@@ -17,7 +18,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.exceptions import *
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.template import Context, loader
+from django.template import RequestContext, loader
 
 
 def get_indivo_client(request, with_session_token=True):
@@ -37,15 +38,15 @@ def parse_token_from_response(resp):
 MIME_TYPES = {'html': 'text/html',
               'xml': 'application/xml'}
 
-def render_raw(template_name, vars, type):
+def render_raw(request, template_name, vars, type):
   """
   rendering a template into a string
   """
   t_obj = loader.get_template('%s/%s.%s' % (settings.TEMPLATE_PREFIX,template_name, type))
-  c_obj = Context(vars)
+  c_obj = RequestContext(request, vars)
   return t_obj.render(c_obj)
 
-def render_template(template_name, vars={}, type="html"):
+def render_template(request, template_name, vars={}, type="html"):
   """
   rendering a template into a Django HTTP response
   with proper mimetype
@@ -56,7 +57,7 @@ def render_template(template_name, vars={}, type="html"):
               'STATIC_HOME': settings.STATIC_HOME}
   new_vars.update(vars)
 
-  content = render_raw(template_name, new_vars, type="html")
+  content = render_raw(request, template_name, new_vars, type="html")
 
   mimetype = MIME_TYPES[type]
 
